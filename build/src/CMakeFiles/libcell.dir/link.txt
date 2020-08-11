@@ -1,0 +1,2 @@
+/usr/bin/ar qc ../../temp_libs/liblibcell.a  CMakeFiles/libcell.dir/Mesh/Cell_Traits.c.o CMakeFiles/libcell.dir/Mesh/Mesh_Frame.c.o CMakeFiles/libcell.dir/Mesh/_Func_.cpp.o CMakeFiles/libcell.dir/Mesh/lib_cell_Iterator.cpp.o CMakeFiles/libcell.dir/Mesh_IO/Mesh_IO.cpp.o CMakeFiles/libcell.dir/tool/libcell_tools_view.cpp.o
+/usr/bin/ranlib ../../temp_libs/liblibcell.a

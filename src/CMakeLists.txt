@@ -1,0 +1,22 @@
+#aux_source_directory(./Mesh MYSRC)
+#add_subdirectory(./Mesh)
+aux_source_directory(./Mesh MYSRC)
+aux_source_directory(./Mesh_IO MYSRC)
+
+aux_source_directory(./tool MYSRC)
+#option(ALGORITHM_USE "use algorithm " OFF)
+#IF(ALGORITHM_USE)
+#add_definitions(-DALGORITHM_USE)
+#set(MYSRC ${MYSRC} ${PROJECT_SOURCE_DIR}/src/Algorithm/Algorithm.cpp)
+#ENDIF(ALGORITHM_USE)
+#set(MYSRC ${MYSRC} ../Interactor_GlobalInfo.c)
+message("${MYSRC}")
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/temp_libs)
+set(myfindlib LIBCELL)
+set(mylib libcell)
+FILE(WRITE Find${myfindlib}.cmake "set(CMAKE_PREFIX_PATH \${CMAKE_PREFIX_PATH} \${PROJECT_SOURCE_DIR}/temp_libs)\n set(${myfindlib}_INCLUDE_DIR \${PROJECT_SOURCE_DIR}/include)\n FIND_LIBRARY(${myfindlib}_LIBRARY ${mylib})\n IF(${myfindlib}_INCLUDE_DIR AND ${myfindlib}_LIBRARY)\n SET(${myfindlib}_FOUND TRUE)\n ENDIF(${myfindlib}_INCLUDE_DIR AND ${myfindlib}_LIBRARY)\n")
+
+install(FILES Find${myfindlib}.cmake DESTINATION ${CMAKE_ROOT}/Modules)
+include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/thirdpart/cstructures/include ${PROJECT_SOURCE_DIR}/Algebras/include)
+add_library(${mylib} STATIC ${MYSRC})
+
