@@ -3,7 +3,9 @@
 #include<map>
 #include<tools_rbtree.h>
 #include "lib_cell_Iterator.h"
-
+//度量空间的偏序关系宏，负数表示正无穷
+//返回x>=y的关系
+#define RELATIONSHIP_PARTIAL_ORDER(x,y) x<0?1:(y<0?0:(x>=y?1:-1)) 
 typedef struct Mesh{
 
     template_c external_cell;
