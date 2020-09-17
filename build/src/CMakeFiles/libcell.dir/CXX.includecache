@@ -46,12 +46,6 @@ Mesh/_Func_.h
 string.h
 -
 
-../include/tool/libcell_tools_view.h
-Mesh/_Func_.h
--
-string.h
--
-
 ../thirdpart/cstructures/include/iterator/cstruct_iterator.h
 ../tools_node.h
 ../thirdpart/cstructures/include/tools_node.h
@@ -70,15 +64,7 @@ stdlib.h
 string.h
 -
 
-/home/libo/Documents/c++/libcell1.0/src/Mesh/_Func_.cpp
-Mesh/_Func_.h
--
-
 /home/libo/Documents/c++/libcell1.0/src/Mesh_IO/Mesh_IO.cpp
 Mesh_IO/Mesh_IO.h
--
-
-/home/libo/Documents/c++/libcell1.0/src/tool/libcell_tools_view.cpp
-tool/libcell_tools_view.h
 -
 

@@ -264,6 +264,7 @@ void _ReadCell_(template_m*m,char const*filename)
             }
         }    
     }
+    fclose(infile);
 
 }
 Node* _ReadM_(template_m*m,char const *filename)
@@ -369,6 +370,7 @@ Node* _ReadM_(template_m*m,char const *filename)
         //printf("%s \n",MM);
     }
     RB_Tree_free(tree);
+    fclose(infile);
     return node_reverse(n_c); 
 }
 //writecell 
@@ -496,7 +498,7 @@ void _WriteCell_(template_m*m,char const* filename)
 
    }
    
-
+   fclose(outfile);
 }
 //只有off文件描述单形时才有效（我认为off文件还能描述n维流形）
 void _ReadOff_(template_m *m,char const * filename, int n)
@@ -592,4 +594,33 @@ void _ReadOff_(template_m *m,char const * filename, int n)
 	    return;
 	
 	}
+    fclose(infile);
 }
+/*
+void _Read_(Mesh*mesh,char const * filename)
+{
+    int i=0;
+    while(filename[i]!='.'&&filename[i]!='\0')
+    {
+
+        i++;
+    }
+    if(filename[i]=='\0'||filename[i+1]=='\0'||filename[i+2]=='\0')
+    {return;} 
+    char fn[100];
+    strcpy(fn,filename);
+    if(filename[i+1]=='o'&&filename[i+2]=='b'&&filename[i+3]=='j') 
+    {
+        fn[i+1]='o';fn[i+2]='f';fn[i+3]='f';
+        objtooff(filename);
+        _ReadOff_(mesh,fn,3); 
+    }
+    else if(filename[i+1]=='o'&&filename[i+2]=='f'&&filename[i+3]=='f')
+    {
+        _ReadOff_(mesh,filename,3);
+    }
+    else if(filename[i+1]=='c'&&filename[i+2]=='e'&&filename[i+3]=='l'&&filename[i+4]=='l')
+    {
+        _ReadCell_(mesh,filename);
+    }
+}*/

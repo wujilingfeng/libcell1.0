@@ -8,6 +8,7 @@
 #define _ReadCell_  LibCell_ReadCell_
 #define _WriteCell_ LibCell_WriteCell_
 #define _ReadArray_ LibCell_ReadArray_
+//#define _Read_ LibCell_Read_
 //当off文件描述单形是可以用_ReadOff_    需要在函数内部加判断给出提示
 #ifdef __cplusplus
 extern "C"{
@@ -22,6 +23,7 @@ void _ReadCell_(template_m*,char const *);
 void _WriteCell_(template_m*,char const *);
 //
 void _ReadArray_(template_m*,double**,int**,int **,int*,int,int);
+//void _Read_(Mesh*mesh,char const * filename);
 #ifdef __cplusplus
 }
 #endif

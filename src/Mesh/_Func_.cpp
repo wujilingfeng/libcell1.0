@@ -39,6 +39,7 @@ template_f Mesh_get_face(struct Mesh*own,int id)
 }
 template_f* Mesh_get_facev(struct Mesh*own,template_v** temp_v,int size)
 {
+    
     Node* node=temp_v[0]->faces;
     bool b=false;
     while(node!=NULL)
@@ -168,10 +169,7 @@ template_v* Mesh_create_vertex(struct Mesh* own)
     Vertex_init_(v);
     v->id=own->vertex_id++;
     own->vertices[v->id]=v;
-    if(own->init_v_prop!=NULL)
-    {
-        own->init_v_prop(v);
-    }
+    
     return v;
 }
 template_v* Mesh_create_vertexv(struct Mesh*own,double* p,int size)
@@ -194,10 +192,7 @@ template_f * Mesh_create_face(struct Mesh* own)
     f->halffaces[0]->cell=NULL;f->halffaces[1]->cell=NULL;
     f->id=own->face_id++;
     own->faces[f->id]=f;
-    if(own->init_f_prop!=NULL)
-    {
-        own->init_f_prop(f);
-    }
+    
     return f;
 
 }
@@ -208,10 +203,7 @@ template_c* Mesh_create_cell(struct Mesh* own)
     Cell_init_(c);
     c->id=own->cell_id++;
     own->cells[c->id]=c;
-    if(own->init_c_prop!=NULL)
-    {
-        own->init_c_prop(c);
-    }
+    
 
     return c;
 
@@ -266,10 +258,7 @@ template_hf * Mesh_create_halfface(struct Mesh* own,template_f* f,template_v** t
         hf->vertices[i]=temp_v[i];
     }
     hf->vertices_size=size;
-    if(own->init_hf_prop!=NULL)
-    {
-        own->init_hf_prop(hf);
-    }
+    
 
     return hf;
 }
@@ -904,6 +893,7 @@ template_hf* Mesh_s_opposite_halfface(template_hf*hf)
      }
      return NULL;
 }   
+//需要修改的函数
 Node* Mesh_non_manifold_vertices(struct Mesh* own)
 {
     Node* re=NULL;
@@ -916,6 +906,81 @@ Node* Mesh_non_manifold_vertices(struct Mesh* own)
         } 
     }
     return re;
+}
+bool Mesh_two_cell_is_connected(struct Mesh* own,template_c* c1,template_c* c2)
+{
+    bool re=false;
+    if(c1==NULL||c2==NULL)
+    {
+        return re;
+    }
+    for(auto hfit=Mesh_chf_begin(own,*c1);hfit!=Mesh_chf_end(own,*c1);hfit++)
+    {
+        if(Mesh_s_opposite_halfface(quote(hfit))->cell==c2)
+        {
+            return true;
+        }
+    }
+    return re;
+
+}
+bool Mesh_is_manifold_vertices(struct Mesh*own,template_v*v)
+{
+    if(v->cells==NULL)
+    {
+        return false;
+    } 
+    Node* ncs=node_copy(v->cells);
+    Node* n1=ncs,*n2=(Node*)(n1->Next);
+
+    n1->Next=NULL;
+    if(n2!=NULL)
+    {
+        n2->Prev=NULL;
+    }
+    int flag=0;
+    do{
+        flag=0;
+        for(Node* nit=n2;nit!=NULL;nit=(Node*)(nit->Next))
+        {
+            for(Node* nnit=n1;nnit!=NULL;nnit=(Node*)(nnit->Next))
+            {
+                
+                if(Mesh_two_cell_is_connected(own,(template_c*)(nit->value),(template_c*)(nnit->value)))
+                {
+                    flag=1;
+                    n1=node_overlying(n1,nit->value);
+                    n2=node_delete_value(n2,nit->value);
+                    break;
+                }
+
+                
+            }
+            if(flag==1)
+            {
+                break;
+            }
+
+        } 
+
+    }while(flag==1);
+    if(n2==NULL)
+    {
+        free_node(n1);
+        return true;
+    }
+    else
+    {
+
+        free_node(n1);
+        return false;
+    }
+
+    //Node* re[2]={NULL,NULL};
+   // Node* n1=v->cells,*n2=(Node*)(n1->Next);
+
+
+    return true;
 }
 void reset_c_prop(struct Mesh* mesh)
 {
@@ -1151,6 +1216,7 @@ Node* Mesh_intersection_two_faces(struct Mesh*own,template_f*f0,template_f*f1)
 {
     Node * node=NULL;
     int flag=1;
+
     for(int i=0;i<f0->vertices_size;i++)
     {
         flag=1;

@@ -63,7 +63,9 @@ Node* Mesh_vv_begin(struct Mesh*,const template_v&);
 Node* Mesh_vv_end(struct Mesh*,const template_v&);
 void Mesh_printself(struct Mesh*);
 Node* Mesh_intersection_two_faces(struct Mesh*,template_f*,template_f*);
+bool Mesh_two_cell_is_connected(struct Mesh* own,template_c* c1,template_c* c2);
 Node* Mesh_non_manifold_vertices(struct Mesh*);
+bool Mesh_is_manifold_vertices(struct Mesh*own,template_v*v);
 void Mesh_free(struct Mesh*);
 void Mesh_init(struct Mesh*);
 

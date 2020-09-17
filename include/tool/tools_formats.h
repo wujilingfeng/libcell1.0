@@ -208,6 +208,8 @@ void objtooff(char const * filename)
     
     printf("v_rows: %u,f_rows: %u here\n",v_rows,f_rows);
    free(outfilename); 
+    fclose(infile);
+    fclose(outfile); 
 }
 
 void offtocell(char const* filename)
@@ -436,6 +438,8 @@ void offtocell(char const* filename)
         sprintf(temp_s,"background_dim=%d\n",background_dim);
         fwrite(temp_s,1,5,outfile);*/
     }
+    fclose(outfile);
+    fclose(infile);
 }
 void meshtocell(char const * filename)
 {
@@ -571,72 +575,10 @@ void meshtocell(char const * filename)
     
     }
      
-        /*for(int i=0;i<4;i++)
-        {
-            fscanf(infile,"%s",mesh);
-        }
-
-        fscanf(infile,"%d",&num[0]);
-        printf("vertices,%d",num[0]);
-        V.resize(num[0],3);
-
-        V.setZero();
-        for(int i=0;i<num[0];i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                fscanf(infile,"%lf",&vertices[i][j]);
-                V.coeffRef(i,j)=vertices[i][j];
-            
-            }
-            fscanf(infile,"%s",mesh); 
-        }
-        
-        fscanf(infile,"%s",mesh);
-        fscanf(infile,"%d",&num[1]);
-        printf("num1%d\n",num[1]);
-        int temp_int;
-        F.resize(num[1],3);
-        F.setZero();
-        int faces[num[1]][3];
-        for(int i=0;i<num[1];i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-                 fscanf(infile,"%d",&temp_int);
-                 F.coeffRef(i,j)=temp_int;
-                 faces[i][j]=temp_int;
-            }
-            fscanf(infile,"%d",&temp_int);
-            
-        
-        }
-        fprintf(outfile,"%d %d %d\n",num[0],num[1],0);
-        for(int i=0;i<num[0];i++)
-        {
-            for(int j=0;j<3;j++)
-            {
-            
-                fprintf(outfile,"%lf ",vertices[i][j]);
-
-            }
-            fprintf(outfile,"\n");
-        }
-        for(int i=0;i<num[1];i++)
-        {
-        
-            for(int j=0;j<3;j++)
-            {
-                fprintf(outfile,"%d ",faces[i][j]);
-            }
-            fprintf(outfile,"\n");
-        }
-
-        printf("vertices:%d num[1]:%d\n",num[0],num[1]);
-
-        */
-    
+   
     free(vertices);
     free(tetrahedra);
+    fclose(outfile);
+    fclose(infile);
 }
 
