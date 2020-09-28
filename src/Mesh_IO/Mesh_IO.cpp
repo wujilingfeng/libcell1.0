@@ -160,8 +160,6 @@ void _ReadCell_(template_m*m,char const*filename)
 	            {   
                     fscanf(infile,"%lf",&(v->point[j]));
 	            }
-
-
         
         }
         if(simplex==1)
