@@ -7,6 +7,7 @@
 #include<tool/libcell_tools_view.h>
 //#include<Algorithm/Harmonic.h>
 #include <Algorithm/Conformal.h>
+#include<tool/libcell_tools_octree.h>
 void test_delauny() 
 {
     srand((unsigned)time(0));

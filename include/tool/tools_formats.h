@@ -15,6 +15,10 @@ static double myfscanf_num(FILE * infile,char* b)
         fscanf(infile,"%c",&a);
         *b=a;
     }
+    //while(!((a>='0'&&a<='9')||a=='.'))
+    //{
+//      fscanf(infile,"%c",&a);*b=a;
+    //}
     while((a>='0'&&a<='9')||a=='.')
     {
         if(a=='.')
@@ -61,7 +65,7 @@ static void myfgets(FILE* infile)
         fscanf(infile,"%c",&a);
     }while(a!='\n'&&!feof(infile));
 }
-void objtooff(char const * filename)
+static void objtooff(char const * filename)
 {
     int filenamesize=strlen(filename);
     char *outfilename=(char*)malloc(sizeof(char)*(filenamesize+2));
@@ -212,7 +216,7 @@ void objtooff(char const * filename)
     fclose(outfile); 
 }
 
-void offtocell(char const* filename)
+static void offtocell(char const* filename)
 {
     int filenamesize=strlen(filename);
     char *outfilename=(char*)malloc(filenamesize+2);
@@ -441,7 +445,7 @@ void offtocell(char const* filename)
     fclose(outfile);
     fclose(infile);
 }
-void meshtocell(char const * filename)
+static void meshtocell(char const * filename)
 {
     int filenamesize=strlen(filename);
     char *outfilename=(char*)malloc(filenamesize+1);

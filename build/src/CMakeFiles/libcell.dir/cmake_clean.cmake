@@ -6,7 +6,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/libcell.dir/Mesh/_Func_.cpp.o"
   "CMakeFiles/libcell.dir/Mesh/lib_cell_Iterator.cpp.o"
   "CMakeFiles/libcell.dir/Mesh_IO/Mesh_IO.cpp.o"
+  "CMakeFiles/libcell.dir/tool/libcell_kd_node_iterator.cpp.o"
+  "CMakeFiles/libcell.dir/tool/libcell_octree_iterator.cpp.o"
   "CMakeFiles/libcell.dir/tool/libcell_tools_kd_node.cpp.o"
+  "CMakeFiles/libcell.dir/tool/libcell_tools_octree.cpp.o"
   "CMakeFiles/libcell.dir/tool/libcell_tools_view.cpp.o"
 )
 
