@@ -1,11 +1,10 @@
 
 //基于Eigen的算法，优点是速度，缺点是概念不统一，学习成本繁琐，也有精度问题
-#ifndef LIB_CELL_ALGORITHM1_H
-#define LIB_CELL_ALGORITHM1_H
+#ifndef LIB_CELL_ALGORITHM1_H_
+#define LIB_CELL_ALGORITHM1_H_
 #include<Dense>
 #include<math.h>
 #include<Mesh/_Func_.h>
-
 
 //返回n-1阶代数余子式，也叫广义外积，也等价反对称张量
 double* temp_normal_vector(Eigen::MatrixXd& A)

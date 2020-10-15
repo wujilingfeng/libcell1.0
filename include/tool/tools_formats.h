@@ -1,70 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-static double myfscanf_num(FILE * infile,char* b)
-{
-    double re=0,temp_d=0;
-    unsigned int fac=1;
-    int dot=0;
-    char a;
-    fscanf(infile,"%c",&a);
-    *b=a;
-    
-    while(a==' ')
-    {
-        fscanf(infile,"%c",&a);
-        *b=a;
-    }
-    //while(!((a>='0'&&a<='9')||a=='.'))
-    //{
-//      fscanf(infile,"%c",&a);*b=a;
-    //}
-    while((a>='0'&&a<='9')||a=='.')
-    {
-        if(a=='.')
-        {
-            if(dot==0)
-            {
-                dot=1;
-            }
-            else
-            {
-                printf("cuowu\n");
-                return 0;
-            }
-        }
-        else
-        {
-            temp_d=a-'0';
-            if(dot==0)
-            {
-                re*=10;
-                re+=temp_d; 
 
-            }
-            else
-            {
-                fac*=10;
-                temp_d/=fac;
-                re+=temp_d;
 
-            }
-        }
-
-        fscanf(infile,"%c",&a);
-
-        *b=a;
-    }    
-    return re;
-}
-static void myfgets(FILE* infile)
-{
-    char a;
-    do{
-            
-        fscanf(infile,"%c",&a);
-    }while(a!='\n'&&!feof(infile));
-}
 static void objtooff(char const * filename)
 {
     int filenamesize=strlen(filename);
@@ -76,10 +14,12 @@ static void objtooff(char const * filename)
     FILE *infile,*outfile;
     fopen_s(&infile,filename,"r");
     fopen_s(&outfile,outfilename,"w");
+
 #else
     FILE * infile=fopen(filename,"r");
     FILE *outfile=fopen(outfilename,"w");
 #endif
+  
     if(!infile)
     {
         printf("can't open this file %s\n",filename);
@@ -90,130 +30,61 @@ static void objtooff(char const * filename)
         printf("can't open this file %s\n",filename);
         return;
     }
-    char a;
-    int v_rows=0,f_rows=0;
-    while(!feof(infile))
-    {
-         fscanf(infile,"%c",&a);
-        if(a=='\r')
-        {
-             fscanf(infile,"%c",&a);
-        }
-        if(a=='#')
-        {
-            myfgets(infile); 
-        }
-        else if(a=='v')
-        {
-            fscanf(infile,"%c",&a);
-            if(a==' ')
-            {
-               v_rows++;
-            }
-            
-            myfgets(infile);
-            
-        }
-        else if(a=='f')
-        {
-            f_rows++;
-            myfgets(infile);
-        }
-        else if(a=='\n')
-        {
-        }
-        else
-        {
-            
-           myfgets(infile);
-        } 
-    }
-    fseek(outfile,0,SEEK_SET);
-    fprintf(outfile,"OFF\n");
-    fprintf(outfile,"%u %u %d\n",v_rows,f_rows,0);
-
     fseek(infile,0,SEEK_SET);
-    unsigned int f_ids[10];
+    fseek(outfile,0,SEEK_SET);
+    fprintf(outfile, "%s\n","OFF" );
+    fprintf(outfile, "                                  \n" );
+    int v_rows=0,f_rows=0,vid=0;
+ //   double p1=0,p2=0,p3=0;
+
+    char str[200],str1[100],str2[100],str3[100];
+     
     while(!feof(infile))
     {
-        double v_p;
-        unsigned int f_id;
-        fscanf(infile,"%c",&a);
-        if(a=='\r')
+        fgets(str,200,infile);
+        if(str[0]=='#')
         {
-             fscanf(infile,"%c",&a);
-        }
-        if(a=='#')
-        {
-            myfgets(infile); 
-        }
-        else if(a=='v')
-        {
-            fscanf(infile,"%c",&a);
-            if(a==' ')
-            {
-                for(int i=0;i<3;i++)
-                {
-                
-                    fscanf(infile,"%lf ",&v_p);
-                    //printf("%lf ",v_p);
-                    fprintf(outfile,"%lf ",v_p);
-                }
-              //  v_rows++;
-                fprintf(outfile,"\n");
-            }
-            else
-            {
-            
-                myfgets(infile);
-            }
-            
-        }
-        else if(a=='f')
+            continue;
+        } 
+        else if(str[0]=='v'&&str[1]==' ')
         {
 
-            int cols=0;
-            do{
-                f_id=myfscanf_num(infile,&a);
-                if(a=='\n')
-                {
-                    break;
-                }
-                f_ids[cols]=f_id;
-                //fprintf(outfile,"%u ",f_id);
-                cols++;
-                //printf("%u\n",f_id); 
-                while(a=='/')
-                {
-                    f_id=myfscanf_num(infile,&a); 
-                }
-
-            }while(a!='\n');
-            //f_rows++;
-            fprintf(outfile,"%u ",cols);
-
-            for(int i=0;i<cols;i++)
-            {
-                fprintf(outfile,"%u ",f_ids[i]-1);
-            
-            }
-            fprintf(outfile,"\n");
+            fprintf(outfile, "%s", &str[2] ); 
+            v_rows++;
+            //sscanf(&str[2],"%lf %")
+            //fprintf(outfile, "%d\n", );
+            //printf("%s\n",str );
         }
-        else if(a=='\n')
+        else if(str[0]=='f'&&str[1]==' ')
         {
-        }
-        else
-        {
-            
-           myfgets(infile);
-        }
-    
+            sscanf(&str[2],"%s %s %s",str1,str2,str3);
+            sscanf(str1,"%d",&vid);
+            fprintf(outfile, "%d ",vid ); 
+            sscanf(str2,"%d",&vid);
+            fprintf(outfile, "%d ",vid );
+            sscanf(str3,"%d",&vid);
+            fprintf(outfile, "%d\n",vid );  
+            f_rows++;
+        }     
+        
     }
-    
-    printf("v_rows: %u,f_rows: %u here\n",v_rows,f_rows);
-   free(outfilename); 
     fclose(infile);
     fclose(outfile); 
+
+   
+     printf("%d\n",v_rows );
+#ifdef WIN32
+    fopen_s(&outfile,outfilename,"r+");   
+#else
+    outfile=fopen(outfilename,"r+");
+#endif
+    fseek(outfile,0,SEEK_SET);
+    fgets(str,200,outfile);
+    fprintf(outfile, "%d %d %d",v_rows,0,f_rows );
+
+    fclose(outfile); 
+
+    free(outfilename); 
 }
 
 static void offtocell(char const* filename)
